@@ -1088,6 +1088,137 @@ Finally for the interesting part, the implementation of the slot
        }
 
 Load File
+  # recent.h
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#004a43; ">#</span><span style="color:#004a43; ">ifndef</span><span style="color:#004a43; "> RECENT_H</span>
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">define</span><span style="color:#004a43; "> RECENT_H</span>
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">include </span><span style="color:#800000; ">"</span><span style="color:#40015a; ">QTextEdit</span><span style="color:#800000; ">"</span>
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">include </span><span style="color:#800000; ">&lt;</span><span style="color:#40015a; ">QDialog</span><span style="color:#800000; ">&gt;</span>
+
+<span style="color:#800000; font-weight:bold; ">namespace</span> Ui <span style="color:#800080; ">{</span>
+<span style="color:#800000; font-weight:bold; ">class</span> Recent<span style="color:#800080; ">;</span>
+<span style="color:#800080; ">}</span>
+
+<span style="color:#800000; font-weight:bold; ">class</span> Recent <span style="color:#800080; ">:</span> <span style="color:#800000; font-weight:bold; ">public</span> <span style="color:#603000; ">QDialog</span>
+<span style="color:#800080; ">{</span>
+    <span style="color:#004a43; ">Q_OBJECT</span>
+
+<span style="color:#800000; font-weight:bold; ">public</span><span style="color:#e34adc; ">:</span>
+    <span style="color:#800000; font-weight:bold; ">explicit</span> Recent<span style="color:#808030; ">(</span><span style="color:#603000; ">QWidget</span> <span style="color:#808030; ">*</span>parent <span style="color:#808030; ">=</span> <span style="color:#800000; font-weight:bold; ">nullptr</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+    <span style="color:#808030; ">~</span>Recent<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+    <span style="color:#603000; ">QTextEdit</span><span style="color:#808030; ">*</span> recentText<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span><span style="color:#800000; font-weight:bold; ">const</span><span style="color:#800080; ">;</span>
+<span style="color:#800000; font-weight:bold; ">private</span><span style="color:#e34adc; ">:</span>
+    Ui<span style="color:#800080; ">::</span>Recent <span style="color:#808030; ">*</span>ui<span style="color:#800080; ">;</span>
+<span style="color:#800080; ">}</span><span style="color:#800080; ">;</span>
+
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">endif</span><span style="color:#004a43; "> </span><span style="color:#696969; ">// RECENT_H</span>
+</pre>
+
+
+  # recent.cpp
+
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#004a43; ">#</span><span style="color:#004a43; ">include </span><span style="color:#800000; ">"</span><span style="color:#40015a; ">recent.h</span><span style="color:#800000; ">"</span>
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">include </span><span style="color:#800000; ">"</span><span style="color:#40015a; ">ui_recent.h</span><span style="color:#800000; ">"</span>
+
+Recent<span style="color:#800080; ">::</span>Recent<span style="color:#808030; ">(</span><span style="color:#603000; ">QWidget</span> <span style="color:#808030; ">*</span>parent<span style="color:#808030; ">)</span> <span style="color:#800080; ">:</span>
+    <span style="color:#603000; ">QDialog</span><span style="color:#808030; ">(</span>parent<span style="color:#808030; ">)</span><span style="color:#808030; ">,</span>
+    ui<span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">new</span> Ui<span style="color:#800080; ">::</span>Recent<span style="color:#808030; ">)</span>
+<span style="color:#800080; ">{</span>
+    ui<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>setupUi<span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">this</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+<span style="color:#800080; ">}</span>
+
+Recent<span style="color:#800080; ">::</span><span style="color:#808030; ">~</span>Recent<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span>
+<span style="color:#800080; ">{</span>
+    <span style="color:#800000; font-weight:bold; ">delete</span> ui<span style="color:#800080; ">;</span>
+<span style="color:#800080; ">}</span>
+<span style="color:#603000; ">QTextEdit</span><span style="color:#808030; ">*</span> Recent<span style="color:#800080; ">::</span>recentText<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span> <span style="color:#800000; font-weight:bold; ">const</span><span style="color:#800080; ">{</span>
+    <span style="color:#800000; font-weight:bold; ">return</span> ui<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>textEdit<span style="color:#800080; ">;</span>
+<span style="color:#800080; ">}</span>
+</pre>
+
+
+  # main.cpp
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#004a43; ">#</span><span style="color:#004a43; ">include </span><span style="color:#800000; ">"</span><span style="color:#40015a; ">spreadsheet.h</span><span style="color:#800000; ">"</span>
+
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">include </span><span style="color:#800000; ">&lt;</span><span style="color:#40015a; ">QApplication</span><span style="color:#800000; ">&gt;</span>
+
+<span style="color:#800000; font-weight:bold; ">int</span> <span style="color:#400000; ">main</span><span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">int</span> argc<span style="color:#808030; ">,</span> <span style="color:#800000; font-weight:bold; ">char</span> <span style="color:#808030; ">*</span>argv<span style="color:#808030; ">[</span><span style="color:#808030; ">]</span><span style="color:#808030; ">)</span>
+<span style="color:#800080; ">{</span>
+    <span style="color:#603000; ">QApplication</span> a<span style="color:#808030; ">(</span>argc<span style="color:#808030; ">,</span> argv<span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+    SpreadSheet w<span style="color:#800080; ">;</span>
+    w<span style="color:#808030; ">.</span>show<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+    <span style="color:#800000; font-weight:bold; ">return</span> a<span style="color:#808030; ">.</span>exec<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+<span style="color:#800080; ">}</span>
+
+</pre>
+
+# godialog.h
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#004a43; ">#</span><span style="color:#004a43; ">ifndef</span><span style="color:#004a43; "> GODIALOG_H</span>
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">define</span><span style="color:#004a43; "> GODIALOG_H</span>
+
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">include </span><span style="color:#800000; ">&lt;</span><span style="color:#40015a; ">QDialog</span><span style="color:#800000; ">&gt;</span>
+
+<span style="color:#800000; font-weight:bold; ">namespace</span> Ui <span style="color:#800080; ">{</span>
+<span style="color:#800000; font-weight:bold; ">class</span> GoDialog<span style="color:#800080; ">;</span>
+<span style="color:#800080; ">}</span>
+
+<span style="color:#800000; font-weight:bold; ">class</span> GoDialog <span style="color:#800080; ">:</span> <span style="color:#800000; font-weight:bold; ">public</span> <span style="color:#603000; ">QDialog</span>
+<span style="color:#800080; ">{</span>
+    <span style="color:#004a43; ">Q_OBJECT</span>
+
+<span style="color:#800000; font-weight:bold; ">public</span><span style="color:#e34adc; ">:</span>
+    <span style="color:#800000; font-weight:bold; ">explicit</span> GoDialog<span style="color:#808030; ">(</span><span style="color:#603000; ">QWidget</span> <span style="color:#808030; ">*</span>parent <span style="color:#808030; ">=</span> <span style="color:#800000; font-weight:bold; ">nullptr</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+    <span style="color:#808030; ">~</span>GoDialog<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+    <span style="color:#603000; ">QString</span> getCell<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span> <span style="color:#800000; font-weight:bold; ">const</span><span style="color:#800080; ">;</span>     <span style="color:#696969; ">//Getter pour le text de lineEdit</span>
+
+<span style="color:#800000; font-weight:bold; ">private</span><span style="color:#e34adc; ">:</span>
+    Ui<span style="color:#800080; ">::</span>GoDialog <span style="color:#808030; ">*</span>ui<span style="color:#800080; ">;</span>
+<span style="color:#800080; ">}</span><span style="color:#800080; ">;</span>
+
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">endif</span><span style="color:#004a43; "> </span><span style="color:#696969; ">// GODIALOG_H</span>
+</pre>
+
+ # godialog.cpp
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#004a43; ">#</span><span style="color:#004a43; ">include </span><span style="color:#800000; ">"</span><span style="color:#40015a; ">godialog.h</span><span style="color:#800000; ">"</span>
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">include </span><span style="color:#800000; ">"</span><span style="color:#40015a; ">ui_godialog.h</span><span style="color:#800000; ">"</span>
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">include </span><span style="color:#800000; ">&lt;</span><span style="color:#40015a; ">QRegExp</span><span style="color:#800000; ">&gt;</span>
+<span style="color:#004a43; ">#</span><span style="color:#004a43; ">include </span><span style="color:#800000; ">&lt;</span><span style="color:#40015a; ">QRegExpValidator</span><span style="color:#800000; ">&gt;</span>
+
+GoDialog<span style="color:#800080; ">::</span>GoDialog<span style="color:#808030; ">(</span><span style="color:#603000; ">QWidget</span> <span style="color:#808030; ">*</span>parent<span style="color:#808030; ">)</span> <span style="color:#800080; ">:</span>
+    <span style="color:#603000; ">QDialog</span><span style="color:#808030; ">(</span>parent<span style="color:#808030; ">)</span><span style="color:#808030; ">,</span>
+    ui<span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">new</span> Ui<span style="color:#800080; ">::</span>GoDialog<span style="color:#808030; ">)</span>
+<span style="color:#800080; ">{</span>
+    ui<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>setupUi<span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">this</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+    <span style="color:#696969; ">//expression reguliere pour valider la cellule</span>
+    <span style="color:#603000; ">QRegExp</span> <span style="color:#603000; ">exp</span><span style="color:#800080; ">{</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">[A-Z][1-9][0-9]{0,2}</span><span style="color:#800000; ">"</span><span style="color:#800080; ">}</span><span style="color:#800080; ">;</span>
+    ui<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>lineEdit<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>setValidator<span style="color:#808030; ">(</span><span style="color:#800000; font-weight:bold; ">new</span> <span style="color:#603000; ">QRegExpValidator</span><span style="color:#808030; ">(</span><span style="color:#603000; ">exp</span><span style="color:#808030; ">)</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+<span style="color:#800080; ">}</span>
+
+GoDialog<span style="color:#800080; ">::</span><span style="color:#808030; ">~</span>GoDialog<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span>
+<span style="color:#800080; ">{</span>
+    <span style="color:#800000; font-weight:bold; ">delete</span> ui<span style="color:#800080; ">;</span>
+<span style="color:#800080; ">}</span>
+
+<span style="color:#603000; ">QString</span> GoDialog<span style="color:#800080; ">::</span>getCell<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span> <span style="color:#800000; font-weight:bold; ">const</span><span style="color:#800080; ">{</span>
+    <span style="color:#800000; font-weight:bold; ">return</span> ui<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span> lineEdit<span style="color:#808030; ">-</span><span style="color:#808030; ">&gt;</span>text<span style="color:#808030; ">(</span><span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+<span style="color:#800080; ">}</span>
+
+</pre>
+
+![WhatsApp Image 2021-12-19 at 17 15 01](https://user-images.githubusercontent.com/86810485/146689310-b2d164d0-76af-4d4e-93a9-4715d23acde6.jpeg)
+
+about us
+![WhatsApp Image 2021-12-19 at 17 18 33](https://user-images.githubusercontent.com/86810485/146689370-c0a2064c-564e-45a0-a11c-815853a472a8.jpeg)
+
+
+
+
+
+
 # finddialog.h
 
 <pre style="color:#000000;background:#ffffff;"><span style="color:#004a43; ">#</span><span style="color:#004a43; ">ifndef</span><span style="color:#004a43; "> FINDDIALOG_H</span>
@@ -1416,7 +1547,7 @@ currentFile<span style="color:#808030; ">=</span><span style="color:#800000; fon
   # Icons
 Add a resource file and add a set of predefined icons from you choice.
 
-# icons.cpp
+# icons.qrc
 
 <pre style="color:#000000;background:#ffffff;"><span style="color:#808030; ">&lt;</span>RCC<span style="color:#808030; ">&gt;</span>
     <span style="color:#808030; ">&lt;</span>qresource prefix<span style="color:#808030; ">=</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">/</span><span style="color:#800000; ">"</span><span style="color:#808030; ">&gt;</span>
